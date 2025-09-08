@@ -20,6 +20,7 @@ const generateDummyHeatingStations = () => {
 const focusStation = (geoid) => {
   // TODO: download station data
   // TODO: clear and add card div for station below map
+  console.log("Station", geoid);
 };
 
 export const initMap = () => {

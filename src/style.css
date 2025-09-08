@@ -1,32 +1,35 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #02020f;
-    color: #e2e1e9;
+    background-color: #11141c;
+    color: #c7d5e0;
     line-height: 1.6;
     margin: 0px;
 }
 
 main {
     width: 100%;
-    background-image: linear-gradient(to bottom, #02020f, #020222);
-    background-color: #02020f;
+    background-color: #0b0f15;
 }
 
 .main-content {
-    color: #d6d6f0;
+    color: #c7d5e0;
     max-width: 1000px;
     margin: 0 auto;
-    padding-bottom: 5rem;
-    padding-top: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 1rem 1rem;
 }
 
 header {
+    background-color: #11141c;
+    border-bottom: 1px solid rgba(76, 84, 90, 0.5);
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
+    padding: 1rem;
+}
+
+header .header-content {
     max-width: 1000px;
     margin: 0 auto;
-    width: 100%;
-    padding: 10px;
 }
 
 .top-logo-container {
@@ -44,7 +47,8 @@ header {
 
 h1 {
     font-size: 1.2rem;
-    color: #1b80c2;
+    color: #f1f1f1;
+    margin-bottom: 0.5rem;
 }
 
 .top-keywords-day {
@@ -59,18 +63,34 @@ table {
 
 td,
 th {
-    border: 1px solid #dddddd;
+    border: 1px solid rgba(76, 84, 90, 0.5);
     text-align: left;
     padding: 8px;
 }
 
 tr:nth-child(even) {
-    background-color: #283b5517;
+    background-color: #2a475e33;
 }
 
-hr {
-    color: #ffffff0a;
-    margin: 32px 0px;
+.card {
+    background-color: #11141c;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(76, 84, 90, 0.5);
+}
+
+.card h1 {
+    margin-top: 0;
+}
+
+.card p {
+    margin: 5px 0px;
+}
+
+.card hr {
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    margin: 15px 0px;
 }
 
 .update-table {
@@ -88,18 +108,38 @@ hr {
     height: 500px;
 }
 
+.map-station-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 30px;
+    margin-right: 5px;
+    background-color: #2a475e;
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    min-height: 250px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.no-selection-placeholder {
+    margin: 0;
+    padding: 1rem;
+}
+
+.no-selection-placeholder p {
+    margin: 0;
+    color: #8f98a0;
+}
+
 .site-footer {
-    background-color: #02020f;
-    color: #ffffff;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+    background-color: #11141c;
+    color: #c7d5e0;
+    padding: 2rem 1rem;
+    border-top: 1px solid rgba(76, 84, 90, 0.5);
 }
 
 .footer-content {
-    max-width: 80rem;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     display: flex;

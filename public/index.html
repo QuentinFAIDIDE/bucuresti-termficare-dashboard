@@ -14,30 +14,38 @@
     <main>
         <div class="main-content">
 
-            <h1 style="margin-top: 0px;">About This Website</h1>
-            <p>Termoficarekt monitors the health of public heating stations in Bucharest. You can get global metrics
-                about the proportions of stations that are broken over time, and station specific statistics and
-                incident history.</p>
+            <div class="card">
+                <h1>About This Website</h1>
 
-            <p>You are encouraged to recommend it to people who are looking for an appartment and won't take shit from
-                the real estate agent telling them that in this suburb it never breaks.</p>
+                <p>Termoficarekt monitors the health of public heating stations in Bucharest. You can get global metrics
+                    about the proportions of stations that are broken over time, and station specific statistics and
+                    incident history.</p>
 
-            <hr />
-
-            <h1 style="margin-top: 0px;">Broken Heating Stations Over Time</h1>
-            <p>Count of stations over time that are either working, experiencing issues, or are broken.</p>
-
-            <div id="historical-chart-container" style="height: 400px;">
-                <canvas id="historical-chart"></canvas>
+                <p>You are encouraged to recommend it to people who are looking for an appartment and won't take shit
+                    from
+                    the real estate agent telling them that in this suburb it never breaks.</p>
             </div>
 
-            <hr />
+            <div class="card">
+                <h1>Broken Heating Stations Over Time</h1>
+                <p>Count of stations over time that are either working, experiencing issues, or are broken.</p>
+                <div id="historical-chart-container" style="height: 400px;">
+                    <canvas id="historical-chart"></canvas>
+                </div>
+            </div>
 
-            <h1 style="margin-top: 0px;">Inspect a Heating Station</h1>
-            <p>Click on a station to inspect its uptime and a list of recent incidents.</p>
+            <div class="card">
+                <h1>Inspect a Heating Station</h1>
+                <p>Click on a station to inspect its uptime and a list of recent incidents.</p>
 
-            <div class="map-container">
-                <div id="map" style="height: 500px; width: 100%;"></div>
+                <div class="map-container">
+                    <div id="map" style="height: 500px; width: 100%;"></div>
+                </div>
+                <div class="map-station-placeholder">
+                    <div class="no-selection-placeholder">
+                        <p>Click on a station to view statistics about it.</p>
+                    </div>
+                </div>
             </div>
 
 
