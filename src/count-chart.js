@@ -1,30 +1,11 @@
 import { Chart, registerables } from "chart.js";
 import "chartjs-adapter-date-fns";
+import { getCountData } from "./api.js";
 
 Chart.register(...registerables);
 
-// Generate dummy data with unix timestamps
-const generateDummyCountData = () => {
-  const timestamps = [];
-  const working = [];
-  const issues = [];
-  const broken = [];
-
-  // Generate 30 days of data
-  for (let i = 29; i >= 0; i--) {
-    const timestamp = Date.now() - i * 24 * 60 * 60 * 1000;
-    timestamps.push(timestamp);
-
-    working.push(Math.floor(Math.random() * 50) + 100);
-    issues.push(Math.floor(Math.random() * 20) + 10);
-    broken.push(Math.floor(Math.random() * 15) + 5);
-  }
-
-  return { timestamps, working, issues, broken };
-};
-
-export const initCountChart = () => {
-  const data = generateDummyCountData();
+export const initCountChart = async () => {
+  const data = await getCountData();
   const ctx = document.getElementById("historical-chart").getContext("2d");
 
   const chart = new Chart(ctx, {
