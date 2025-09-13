@@ -81,7 +81,101 @@ tr:nth-child(even) {
     border: 1px solid rgba(76, 84, 90, 0.5);
 }
 
+.sub-card {
+    background-color: #2a475e33;
+    margin-top: 0px;
+    padding: 1rem;
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    margin-bottom: 0.5rem;
+}
+
+.sub-card hr {
+    border: 1px solid rgba(76, 84, 90, 0.34);
+}
+
+.incident-table {
+    margin-top: 1.5rem;
+}
+
+.stats-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f1f1f1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #8f98a0;
+}
+
+.incident-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: transparent;
+}
+
+.incident-table th {
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    padding: 8px;
+    background-color: transparent;
+    color: #c7d5e0;
+}
+
+.incident-table td {
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    padding: 8px;
+    color: #c7d5e0;
+    background-color: transparent;
+}
+
+.incident-table tr:nth-child(even) {
+    background-color: transparent;
+}
+
+.incident-table .status-broken {
+    color: rgba(239, 68, 68, 1);
+}
+
+.incident-table .status-issues {
+    color: rgba(251, 191, 36, 1);
+}
+
+.incident-table-header {
+    background-color: #2a475e33;
+}
+
+.station-card h3 {
+    margin-bottom: 0;
+    font-size: medium;
+}
+
+.station-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
 .card h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.card h3 {
     margin-top: 0;
     margin-bottom: 0;
 }

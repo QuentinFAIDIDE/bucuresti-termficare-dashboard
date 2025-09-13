@@ -6,9 +6,11 @@ import { getStations, getStationDetails } from "./api.js";
 // Consistent status colors across all components
 const STATUS_COLORS = {
   working: "rgba(34, 197, 94, 1)",
-  issues: "rgba(251, 191, 36, 1)", 
-  broken: "rgba(239, 68, 68, 1)"
+  issues: "rgba(251, 191, 36, 1)",
+  broken: "rgba(239, 68, 68, 1)",
 };
+
+const STATION_CARDS_CLASS = "station-card";
 
 const extractTimeline = (entries) => {
   const timeline = [];
@@ -55,60 +57,114 @@ const extractIncidentList = (timeline) => {
     .slice(0, 10);
 };
 
-const focusStation = async (geoid) => {
-  // TODO: download station data
-  const entries = await getStationDetails(geoid);
-  const timeline = extractTimeline(entries);
+const calculateStatistics = (timeline) => {
+  const incidents = timeline.filter((entry) => entry.status !== "working");
+  const oneYear = 365 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
 
-  timeline.forEach((t) => {
-    if (t.start === null || t.end === null) {
-      console.log(
-        new Date(t.start).toLocaleString(),
-        new Date(t.end).toLocaleString(),
-        t.status,
-        t.description
-      );
-    }
+  // Filter incidents in the last year
+  const lastYearIncidents = incidents.filter(
+    (incident) => incident.start >= now - oneYear
+  );
+
+  // Calculate total incident hours
+  const totalIncidentHours = lastYearIncidents.reduce((total, incident) => {
+    const duration = (incident.end - incident.start) / (1000 * 60 * 60);
+    return total + duration;
+  }, 0);
+
+  // Average incident hours per month
+  const avgIncidentHoursPerMonth = Math.round(totalIncidentHours / 12);
+
+  // Average incident duration
+  const avgIncidentDuration =
+    lastYearIncidents.length > 0
+      ? Math.round(totalIncidentHours / lastYearIncidents.length)
+      : 0;
+
+  // Longest incident duration
+  const longestIncident = lastYearIncidents.reduce((longest, incident) => {
+    const duration = (incident.end - incident.start) / (1000 * 60 * 60);
+    return duration > longest ? duration : longest;
+  }, 0);
+
+  return {
+    avgIncidentHoursPerMonth,
+    avgIncidentDuration,
+    longestIncident: Math.round(longestIncident),
+  };
+};
+
+const createStatisticsSection = (stats, container) => {
+  const statsSection = document.createElement("div");
+  statsSection.className = "stats-section";
+
+  const statItems = [
+    {
+      value: `${stats.avgIncidentHoursPerMonth}h`,
+      label: "Avg Incident Hours/Month",
+    },
+    { value: `${stats.avgIncidentDuration}h`, label: "Avg Incident Duration" },
+    {
+      value: `${stats.longestIncident}h`,
+      label: "Longest Incident (Last Year)",
+    },
+  ];
+
+  statItems.forEach((item) => {
+    const statItem = document.createElement("div");
+    statItem.className = "stat-item";
+
+    const statValue = document.createElement("div");
+    statValue.className = "stat-value";
+    statValue.textContent = item.value;
+
+    const statLabel = document.createElement("div");
+    statLabel.className = "stat-label";
+    statLabel.textContent = item.label;
+
+    statItem.appendChild(statValue);
+    statItem.appendChild(statLabel);
+    statsSection.appendChild(statItem);
   });
 
-  const incidentList = extractIncidentList(timeline);
+  container.appendChild(statsSection);
+};
 
-  // Create or get the timeline card
-  let timelineCard = document.getElementById("timeline-card");
-  if (!timelineCard) {
-    timelineCard = document.createElement("div");
-    timelineCard.id = "timeline-card";
-    timelineCard.className = "card";
+const createOrGetSubCard = (cardId, title) => {
+  let card = document.getElementById(cardId);
+  if (!card) {
+    card = document.createElement("div");
+    card.id = cardId;
+    card.className = STATION_CARDS_CLASS;
 
-    const cardTitle = document.createElement("h1");
-    cardTitle.textContent = "Timeline";
-    timelineCard.appendChild(cardTitle);
+    const cardTitle = document.createElement("h3");
+    cardTitle.textContent = title;
+    card.appendChild(cardTitle);
 
     const hr = document.createElement("hr");
-    timelineCard.appendChild(hr);
+    card.appendChild(hr);
 
-    // Insert after the map card
-    const mapCard = document.querySelector(".card:nth-child(3)"); // The map card
-    mapCard.parentNode.insertBefore(timelineCard, mapCard.nextSibling);
+    document.getElementById("sub-card").appendChild(card);
   } else {
-    // Clear existing content except title and hr
-    const title = timelineCard.querySelector("h1");
-    const hr = timelineCard.querySelector("hr");
-    timelineCard.innerHTML = "";
-    timelineCard.appendChild(title);
-    timelineCard.appendChild(hr);
+    const title = card.querySelector("h3");
+    const hr = card.querySelector("hr");
+    card.innerHTML = "";
+    card.appendChild(title);
+    card.appendChild(hr);
   }
+  return card;
+};
 
-  // Create canvas container with fixed height
+const createTimelineChart = (timeline, container) => {
   const chartContainer = document.createElement("div");
   chartContainer.style.height = "150px";
   chartContainer.style.width = "100%";
 
   const canvas = document.createElement("canvas");
   chartContainer.appendChild(canvas);
-  timelineCard.appendChild(chartContainer);
+  container.appendChild(chartContainer);
 
-  // Initialize Chart.js timeline
   new Chart(canvas, {
     type: "bar",
     data: {
@@ -135,14 +191,7 @@ const focusStation = async (geoid) => {
       ],
     },
     options: {
-      layout: {
-        padding: {
-          top: 10,
-          bottom: 10,
-          left: 30,
-          right: 30,
-        },
-      },
+      layout: { padding: { top: 10, bottom: 10, left: 30, right: 30 } },
       indexAxis: "y",
       scales: {
         x: {
@@ -151,115 +200,107 @@ const focusStation = async (geoid) => {
           min: Date.now() - 30 * 24 * 60 * 60 * 1000,
           max: Date.now(),
         },
-        y: {
-          display: false,
-        },
+        y: { display: false },
       },
       plugins: {
         tooltip: {
           callbacks: {
             label: (context) => {
               const t = timeline[context.dataIndex];
-              const start = new Date(t.start).toLocaleString();
-              const end = new Date(t.end).toLocaleString();
               return [
                 `Status: ${t.status}`,
                 `Description: ${t.description}`,
-                `Start: ${start}`,
-                `End: ${end}`,
+                `Start: ${new Date(t.start).toLocaleString()}`,
+                `End: ${new Date(t.end).toLocaleString()}`,
               ];
             },
           },
         },
-        legend: {
-          display: false,
-        },
+        legend: { display: false },
       },
       maintainAspectRatio: false,
     },
   });
+};
 
-  // Create or get the incidents card
-  let incidentsCard = document.getElementById("incidents-card");
-  if (!incidentsCard) {
-    incidentsCard = document.createElement("div");
-    incidentsCard.id = "incidents-card";
-    incidentsCard.className = "card";
-
-    const cardTitle = document.createElement("h1");
-    cardTitle.textContent = "Last 10 Incidents";
-    incidentsCard.appendChild(cardTitle);
-
-    const hr = document.createElement("hr");
-    incidentsCard.appendChild(hr);
-
-    // Insert after the timeline card
-    timelineCard.parentNode.insertBefore(incidentsCard, timelineCard.nextSibling);
-  } else {
-    // Clear existing content except title and hr
-    const title = incidentsCard.querySelector("h1");
-    const hr = incidentsCard.querySelector("hr");
-    incidentsCard.innerHTML = "";
-    incidentsCard.appendChild(title);
-    incidentsCard.appendChild(hr);
-  }
-
-  // Create incidents table
+const createIncidentsTable = (incidentList, container) => {
   const table = document.createElement("table");
-  table.style.width = "100%";
-  table.style.borderCollapse = "collapse";
+  table.className = "incident-table";
 
   const headerRow = document.createElement("tr");
+  headerRow.className = "incident-table-header";
   ["Start Date", "Stop Date", "Status", "Description"].forEach((header) => {
     const th = document.createElement("th");
     th.textContent = header;
-    th.style.border = "1px solid rgba(76, 84, 90, 0.5)";
-    th.style.padding = "8px";
-    th.style.backgroundColor = "#2a475e33";
-    th.style.color = "#c7d5e0";
     headerRow.appendChild(th);
   });
   table.appendChild(headerRow);
 
-  incidentList.forEach((incident, index) => {
+  incidentList.forEach((incident) => {
     const row = document.createElement("tr");
-    if (index % 2 === 1) {
-      row.style.backgroundColor = "#2a475e33";
-    }
 
     const startDateCell = document.createElement("td");
     startDateCell.textContent = new Date(incident.start).toLocaleDateString();
-    startDateCell.style.border = "1px solid rgba(76, 84, 90, 0.5)";
-    startDateCell.style.padding = "8px";
-    startDateCell.style.color = "#c7d5e0";
 
     const endDateCell = document.createElement("td");
     endDateCell.textContent = new Date(incident.end).toLocaleDateString();
-    endDateCell.style.border = "1px solid rgba(76, 84, 90, 0.5)";
-    endDateCell.style.padding = "8px";
-    endDateCell.style.color = "#c7d5e0";
 
     const statusCell = document.createElement("td");
     statusCell.textContent = incident.status;
-    statusCell.style.border = "1px solid rgba(76, 84, 90, 0.5)";
-    statusCell.style.padding = "8px";
-    statusCell.style.color = incident.status === "broken" ? STATUS_COLORS.broken : STATUS_COLORS.issues;
+    statusCell.className =
+      incident.status === "broken" ? "status-broken" : "status-issues";
 
     const descCell = document.createElement("td");
     descCell.textContent = incident.description || "No description";
-    descCell.style.border = "1px solid rgba(76, 84, 90, 0.5)";
-    descCell.style.padding = "8px";
-    descCell.style.color = "#c7d5e0";
 
     row.appendChild(startDateCell);
     row.appendChild(endDateCell);
     row.appendChild(statusCell);
     row.appendChild(descCell);
-
     table.appendChild(row);
   });
 
-  incidentsCard.appendChild(table);
+  container.appendChild(table);
+};
+
+const focusStation = async (geoid) => {
+  const entries = await getStationDetails(geoid);
+  const timeline = extractTimeline(entries);
+  const incidentList = extractIncidentList(timeline);
+
+  // Get station name from stations data
+  const stations = await getStations();
+  const station = stations.find((s) => s.id === geoid);
+  const stationName = station ? station.name : `Station ${geoid}`;
+
+  // Clear placeholder and display station name at top of sub-card
+  const subCard = document.getElementById("sub-card");
+  const placeholder = subCard.querySelector(".no-selection-placeholder");
+  if (placeholder) {
+    placeholder.remove();
+  }
+
+  let stationTitle = subCard.querySelector(".station-title");
+  if (!stationTitle) {
+    stationTitle = document.createElement("h2");
+    stationTitle.className = "station-title";
+    subCard.insertBefore(stationTitle, subCard.firstChild);
+  }
+  stationTitle.textContent = stationName;
+
+  // Create statistics card
+  const statsCard = createOrGetSubCard("statistics-card", "Statistics");
+  const stats = calculateStatistics(timeline);
+  createStatisticsSection(stats, statsCard);
+
+  const timelineCard = createOrGetSubCard("timeline-card", "Timeline");
+  createTimelineChart(timeline, timelineCard);
+
+  const incidentsCard = createOrGetSubCard(
+    "incidents-card",
+    "Last 10 Incidents"
+  );
+  createIncidentsTable(incidentList, incidentsCard);
 };
 
 export const initMap = async () => {
@@ -274,7 +315,11 @@ export const initMap = async () => {
   }).addTo(map);
 
   const stations = await getStations();
-  const statusColors = { working: STATUS_COLORS.working, broken: STATUS_COLORS.broken, issues: STATUS_COLORS.issues };
+  const statusColors = {
+    working: STATUS_COLORS.working,
+    broken: STATUS_COLORS.broken,
+    issues: STATUS_COLORS.issues,
+  };
 
   stations.forEach((station) => {
     L.circleMarker([station.latitude, station.longitude], {
