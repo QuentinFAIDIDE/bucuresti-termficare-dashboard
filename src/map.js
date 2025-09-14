@@ -2,6 +2,7 @@ import { Chart, registerables } from "chart.js";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { getStations, getStationDetails } from "./api.js";
+import { t } from "./i18n.js";
 
 // Consistent status colors across all components
 const STATUS_COLORS = {
@@ -102,12 +103,12 @@ const createStatisticsSection = (stats, container) => {
   const statItems = [
     {
       value: `${stats.avgIncidentHoursPerMonth}h`,
-      label: "Avg Incident Hours/Month",
+      label: "stats.avgHours",
     },
-    { value: `${stats.avgIncidentDuration}h`, label: "Avg Incident Duration" },
+    { value: `${stats.avgIncidentDuration}h`, label: "stats.avgDuration" },
     {
       value: `${stats.longestIncident}h`,
-      label: "Longest Incident (Last Year)",
+      label: "stats.longest",
     },
   ];
 
@@ -121,7 +122,8 @@ const createStatisticsSection = (stats, container) => {
 
     const statLabel = document.createElement("div");
     statLabel.className = "stat-label";
-    statLabel.textContent = item.label;
+    statLabel.setAttribute("data-i18n", item.label);
+    statLabel.textContent = t(item.label);
 
     statItem.appendChild(statValue);
     statItem.appendChild(statLabel);
@@ -139,7 +141,8 @@ const createOrGetSubCard = (cardId, title) => {
     card.className = STATION_CARDS_CLASS;
 
     const cardTitle = document.createElement("h3");
-    cardTitle.textContent = title;
+    cardTitle.textContent = t(title);
+    cardTitle.setAttribute("data-i18n", title);
     card.appendChild(cardTitle);
 
     const hr = document.createElement("hr");
@@ -229,9 +232,15 @@ const createIncidentsTable = (incidentList, container) => {
 
   const headerRow = document.createElement("tr");
   headerRow.className = "incident-table-header";
-  ["Start Date", "Stop Date", "Status", "Description"].forEach((header) => {
+  [
+    "incidents.startDate",
+    "incidents.stopDate",
+    "incidents.status",
+    "incidents.description",
+  ].forEach((header) => {
     const th = document.createElement("th");
-    th.textContent = header;
+    th.textContent = t(header);
+    th.setAttribute("data-i18n", header);
     headerRow.appendChild(th);
   });
   table.appendChild(headerRow);
@@ -291,17 +300,14 @@ const focusStation = async (geoid) => {
   stationTitle.textContent = stationName;
 
   // Create statistics card
-  const statsCard = createOrGetSubCard("statistics-card", "Statistics");
+  const statsCard = createOrGetSubCard("statistics-card", "stats.title");
   const stats = calculateStatistics(timeline);
   createStatisticsSection(stats, statsCard);
 
-  const timelineCard = createOrGetSubCard("timeline-card", "Timeline");
+  const timelineCard = createOrGetSubCard("timeline-card", "timeline.title");
   createTimelineChart(timeline, timelineCard);
 
-  const incidentsCard = createOrGetSubCard(
-    "incidents-card",
-    "Last 10 Incidents"
-  );
+  const incidentsCard = createOrGetSubCard("incidents-card", "incidents.title");
   createIncidentsTable(incidentList, incidentsCard);
 
   // Scroll to sub-card
