@@ -1,5 +1,8 @@
 const isDev = true; // Set to false for production
 
+const baseApiUri =
+  "https://2q8q4aa81c.execute-api.eu-south-2.amazonaws.com/prod/";
+
 // Mock data generators
 const generateDummyCountData = () => {
   const timestamps = [];
@@ -83,25 +86,43 @@ const generateDummyStationDetails = () => {
 
 // API functions
 export const getCountData = async () => {
-  if (isDev) {
-    return generateDummyCountData();
-  }
-  const response = await fetch("/api/counts");
-  return response.json();
+  const response = await fetch(baseApiUri + "counts");
+  const respData = await response.json();
+  const rawData = respData.data;
+
+  let timestamps = rawData.map((entry) => new Date(entry.time * 1000));
+  let working = rawData.map((entry) => entry.numGreen);
+  let issues = rawData.map((entry) => entry.numYellow);
+  let broken = rawData.map((entry) => entry.numRed);
+
+  return { timestamps, working, issues, broken };
 };
 
 export const getStations = async () => {
-  if (isDev) {
-    return generateDummyHeatingStations();
-  }
-  const response = await fetch("/api/stations");
-  return response.json();
+  const response = await fetch(baseApiUri + "/stations");
+  const rawData = await response.json();
+  const data = rawData.data.map((station) => ({
+    id: station.geoId,
+    status: station.lastStatus,
+    longitude: station.longitude,
+    latitude: station.latitude,
+    name: station.name,
+  }));
+  return data;
 };
 
 export const getStationDetails = async (stationId) => {
-  if (isDev) {
-    return generateDummyStationDetails();
-  }
-  const response = await fetch(`/api/stations/${stationId}`);
-  return response.json();
+  const response = await fetch(
+    baseApiUri + `/station-details?geoId=${stationId}`
+  );
+  const rawData = await response.json();
+  const data = rawData.data
+    .map((station) => ({
+      status: station.status,
+      timestamp: new Date(station.fetchTime * 1000),
+      description: station.incidentText,
+      failureType: station.incidentType,
+    }))
+    .sort((a, b) => a.timestamp - b.timestamp);
+  return data;
 };

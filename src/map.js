@@ -168,6 +168,11 @@ const createTimelineChart = (timeline, container) => {
   chartContainer.appendChild(canvas);
   container.appendChild(chartContainer);
 
+  // Calculate min time: max between 3 months ago and earliest data
+  const threeMonthsAgo = Date.now() - 90 * 24 * 60 * 60 * 1000;
+  const earliestData = timeline.length > 0 ? Math.min(...timeline.map(t => t.start)) : threeMonthsAgo;
+  const minTime = Math.max(threeMonthsAgo, earliestData);
+
   new Chart(canvas, {
     type: "bar",
     data: {
@@ -200,8 +205,11 @@ const createTimelineChart = (timeline, container) => {
         x: {
           type: "time",
           beginAtZero: false,
-          min: Date.now() - 30 * 24 * 60 * 60 * 1000,
+          min: minTime,
           max: Date.now(),
+          time: {
+            unit: "day"
+          }
         },
         y: { display: false },
       },
@@ -326,18 +334,13 @@ export const initMap = async () => {
   }).addTo(map);
 
   const stations = await getStations();
-  const statusColors = {
-    working: STATUS_COLORS.working,
-    broken: STATUS_COLORS.broken,
-    issues: STATUS_COLORS.issues,
-  };
 
   stations.forEach((station) => {
     L.circleMarker([station.latitude, station.longitude], {
-      color: statusColors[station.status],
-      fillColor: statusColors[station.status],
+      color: STATUS_COLORS[station.status],
+      fillColor: STATUS_COLORS[station.status],
       fillOpacity: 0.8,
-      radius: 8,
+      radius: 3,
     })
       .bindTooltip(station.name)
       .on("click", () => focusStation(station.id))
