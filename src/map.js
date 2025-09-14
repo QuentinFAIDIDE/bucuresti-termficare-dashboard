@@ -240,10 +240,12 @@ const createIncidentsTable = (incidentList, container) => {
     const row = document.createElement("tr");
 
     const startDateCell = document.createElement("td");
-    startDateCell.textContent = new Date(incident.start).toLocaleDateString();
+    startDateCell.textContent += new Date(incident.start).toLocaleString(
+      "ro-RO"
+    );
 
     const endDateCell = document.createElement("td");
-    endDateCell.textContent = new Date(incident.end).toLocaleDateString();
+    endDateCell.textContent = new Date(incident.end).toLocaleString("ro-RO");
 
     const statusCell = document.createElement("td");
     statusCell.textContent = incident.status;
@@ -301,6 +303,9 @@ const focusStation = async (geoid) => {
     "Last 10 Incidents"
   );
   createIncidentsTable(incidentList, incidentsCard);
+
+  // Scroll to sub-card
+  document.getElementById("sub-card").scrollIntoView({ behavior: "smooth" });
 };
 
 export const initMap = async () => {
