@@ -10,6 +10,7 @@ import { startLoading, stopLoading } from "./spinner.js";
 const STATUS_COLORS = {
   working: "rgba(34, 197, 94, 1)",
   issues: "rgba(251, 191, 36, 1)",
+  issue: "rgba(251, 191, 36, 1)",
   broken: "rgba(239, 68, 68, 1)",
 };
 
@@ -190,7 +191,7 @@ const createTimelineChart = (timeline, container) => {
                 return STATUS_COLORS.working;
               case "broken":
                 return STATUS_COLORS.broken;
-              case "issues":
+              case "issue":
                 return STATUS_COLORS.issues;
               default:
                 return "gray";
