@@ -3,6 +3,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { getStations, getStationDetails } from "./api.js";
 import { t } from "./i18n.js";
+import { startLoading, stopLoading } from "./spinner.js";
+
 
 // Consistent status colors across all components
 const STATUS_COLORS = {
@@ -283,6 +285,9 @@ const createIncidentsTable = (incidentList, container) => {
 };
 
 const focusStation = async (geoid) => {
+
+  startLoading("stat-" + geoid)
+
   const entries = await getStationDetails(geoid);
   const timeline = extractTimeline(entries);
   const incidentList = extractIncidentList(timeline);
@@ -320,9 +325,14 @@ const focusStation = async (geoid) => {
 
   // Scroll to sub-card
   document.getElementById("sub-card").scrollIntoView({ behavior: "smooth" });
+
+  stopLoading("stat-" + geoid)
 };
 
 export const initMap = async () => {
+
+  startLoading("map");
+
   // Initialize Bucharest map
   const map = L.map("map").setView([44.4268, 26.1025], 12);
 
@@ -346,6 +356,8 @@ export const initMap = async () => {
       .on("click", () => focusStation(station.id))
       .addTo(map);
   });
+
+  stopLoading("map");
 
   return map;
 };

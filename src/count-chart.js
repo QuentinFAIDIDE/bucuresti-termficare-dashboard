@@ -1,10 +1,14 @@
 import { Chart, registerables } from "chart.js";
 import "chartjs-adapter-date-fns";
 import { getCountData } from "./api.js";
+import { startLoading, stopLoading } from "./spinner.js";
 
 Chart.register(...registerables);
 
 export const initCountChart = async () => {
+
+  startLoading("countChart");
+
   const data = await getCountData();
   const ctx = document.getElementById("historical-chart").getContext("2d");
 
@@ -59,6 +63,8 @@ export const initCountChart = async () => {
       },
     },
   });
+
+  stopLoading("countChart");
 
   return chart;
 };

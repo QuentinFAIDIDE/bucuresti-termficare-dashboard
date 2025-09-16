@@ -18,26 +18,33 @@
         </div>
     </header>
     <main>
+
+        <div id="loading-spinner"></div>
+
         <div class="main-content">
 
             <div class="card warning-card" id="warning-card">
                 <span class="warning-icon">⚠️</span>
-                <p><span data-i18n="warning.text">This dashboard periodically collects heating stations statuses. For real time updates, refer to the</span> <a
-                        href="https://www.cmteb.ro/harta_stare_sistem_termoficare_bucuresti.php"
-                        target="_blank" data-i18n="warning.link">official website</a>.</p>
+                <p><span data-i18n="warning.text">This dashboard periodically collects heating stations statuses. For
+                        real time updates, refer to the</span> <a
+                        href="https://www.cmteb.ro/harta_stare_sistem_termoficare_bucuresti.php" target="_blank"
+                        data-i18n="warning.link">official website</a>.</p>
                 <span class="warning-close" onclick="document.getElementById('warning-card').remove()">×</span>
             </div>
 
             <div class="card">
                 <h1 data-i18n="about.title">About This Website</h1>
 
-                <p data-i18n="about.description">Termoficarekt monitors the health of public heating stations in Bucharest. You can get global metrics about the proportions of stations that are broken over time, and station specific statistics and incident history.</p>
+                <p data-i18n="about.description">Termoficarekt monitors the health of public heating stations in
+                    Bucharest. You can get global metrics about the proportions of stations that are broken over time,
+                    and station specific statistics and incident history.</p>
 
             </div>
 
             <div class="card">
                 <h1 data-i18n="chart.title">Broken Heating Stations Over Time</h1>
-                <p data-i18n="chart.description">Count of stations over time that are either working, experiencing issues, or are broken.</p>
+                <p data-i18n="chart.description">Count of stations over time that are either working, experiencing
+                    issues, or are broken.</p>
 
                 <hr />
 
@@ -49,7 +56,8 @@
             <div class="card"
                 style="margin-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
                 <h1 data-i18n="map.title">Inspect a Heating Station</h1>
-                <p data-i18n="map.description">Click on a station to inspect its uptime and a list of recent incidents.</p>
+                <p data-i18n="map.description">Click on a station to inspect its uptime and a list of recent incidents.
+                </p>
                 <hr />
                 <div class="map-container">
                     <div id="map" style="height: 500px; width: 100%;"></div>
