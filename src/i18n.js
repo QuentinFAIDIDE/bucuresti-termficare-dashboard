@@ -22,6 +22,7 @@ const translations = {
     "incidents.stopDate": "Stop Date",
     "incidents.status": "Status",
     "incidents.description": "Description",
+    "incidents.noIncidents": "No incidents to show for this station",
     "placeholder.text":
       "Click on a station to view its timeline and incident history.",
     "status.working": "working",
@@ -51,6 +52,7 @@ const translations = {
     "incidents.stopDate": "Data Sfârșit",
     "incidents.status": "Status",
     "incidents.description": "Descriere",
+    "incidents.noIncidents": "Nu există incidente de afișat pentru această stație",
     "placeholder.text":
       "Faceți clic pe o stație pentru a vedea cronologia și istoricul incidentelor.",
     "status.working": "funcționează",

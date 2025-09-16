@@ -237,6 +237,16 @@ const createTimelineChart = (timeline, container) => {
 };
 
 const createIncidentsTable = (incidentList, container) => {
+  if (incidentList.length === 0) {
+    const noIncidentsMsg = document.createElement("p");
+    noIncidentsMsg.textContent = t("incidents.noIncidents");
+    noIncidentsMsg.setAttribute("data-i18n", "incidents.noIncidents");
+    noIncidentsMsg.style.textAlign = "center";
+    noIncidentsMsg.style.color = "#8f98a0";
+    container.appendChild(noIncidentsMsg);
+    return;
+  }
+
   const table = document.createElement("table");
   table.className = "incident-table";
 
