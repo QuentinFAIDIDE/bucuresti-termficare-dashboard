@@ -23,6 +23,10 @@ const translations = {
     "incidents.status": "Status",
     "incidents.description": "Description",
     "incidents.noIncidents": "No incidents to show for this station",
+    "status.title": "Current Station Status",
+    "status.working": "Working",
+    "status.issues": "Issues",
+    "status.broken": "Broken",
     "placeholder.text":
       "Click on a station to view its timeline and incident history.",
     "status.working": "working",
@@ -53,6 +57,10 @@ const translations = {
     "incidents.status": "Status",
     "incidents.description": "Descriere",
     "incidents.noIncidents": "Nu există incidente de afișat pentru această stație",
+    "status.title": "Starea Actuală a Stațiilor",
+    "status.working": "Funcționează",
+    "status.issues": "Probleme",
+    "status.broken": "Defecte",
     "placeholder.text":
       "Faceți clic pe o stație pentru a vedea cronologia și istoricul incidentelor.",
     "status.working": "funcționează",

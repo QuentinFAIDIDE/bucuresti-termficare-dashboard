@@ -126,7 +126,7 @@ tr:nth-child(even) {
 .stats-section {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 1rem;
+    margin-bottom: 0rem;
     padding: 1rem;
     border-radius: 8px;
 }
@@ -136,14 +136,14 @@ tr:nth-child(even) {
 }
 
 .stat-value {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: #f1f1f1;
     margin-bottom: 0.25rem;
 }
 
 .stat-label {
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: #8f98a0;
 }
 
