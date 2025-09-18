@@ -133,6 +133,7 @@ tr:nth-child(even) {
 
 .stat-item {
     text-align: center;
+    flex: 1;
 }
 
 .stat-value {
