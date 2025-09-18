@@ -9,8 +9,9 @@ const translations = {
     "map.title": "Inspect a Heating Station",
     "map.description":
       "Click on a station to inspect its uptime and a list of recent incidents.",
+    "warning.lastUpdated": "This dashboard was last updated on",
     "warning.text":
-      "This dashboard periodically collects heating stations statuses. For real time updates, refer to the",
+      "For real time updates, refer to the",
     "warning.link": "official website",
     "stats.title": "Statistics",
     "stats.avgHours": "Avg Incident Hours/Month",
@@ -43,8 +44,9 @@ const translations = {
     "map.title": "Inspectează o Stație de Încălzire",
     "map.description":
       "Faceți clic pe o stație pentru a inspecta timpul de funcționare și lista incidentelor recente.",
+    "warning.lastUpdated": "Actualizat ultima dată pe",
     "warning.text":
-      "Acest tablou de bord colectează periodic statusurile stațiilor de încălzire. Pentru actualizări în timp real, consultați",
+      "Pentru actualizări în timp real, consultați",
     "warning.link": "site-ul oficial",
     "stats.title": "Statistici",
     "stats.avgHours": "Ore Incidente Medii/Lună",
