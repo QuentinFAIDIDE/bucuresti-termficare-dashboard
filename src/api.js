@@ -1,4 +1,7 @@
-const baseApiUri = __API_URL__;
+const baseApiUri =
+  typeof __API_URL__ !== "undefined"
+    ? __API_URL__
+    : "https:/XXXXXXXX.execute-api.eu-south-2.amazonaws.com/prod/";
 
 // API functions
 export const getCountData = async () => {
