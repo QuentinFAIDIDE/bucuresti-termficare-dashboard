@@ -22,9 +22,3 @@ jobs:
         env:
           API_URL: ${{ secrets.PROD_API_URL }}
         run: npm run build
-
-      - name: Upload dist folder as releast
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: dist/
