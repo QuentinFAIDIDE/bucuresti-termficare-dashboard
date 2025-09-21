@@ -22,3 +22,26 @@ jobs:
         env:
           API_URL: ${{ secrets.PROD_API_URL }}
         run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy to S3
+        run: |
+          # Get S3 bucket name
+          BUCKET_NAME=$(aws s3api list-buckets --query "Buckets[?contains(Name, 'prod-termoficarekt-website')].Name" --output text)
+          echo "Deploying to bucket: $BUCKET_NAME"
+          
+          # Sync files to S3
+          aws s3 sync dist/ s3://$BUCKET_NAME --delete
+          
+          # Get CloudFront distribution ID
+          DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?contains(Comment, 'termoficarekt') || contains(Origins.Items[0].DomainName, '$BUCKET_NAME')].Id" --output text)
+          echo "Invalidating CloudFront distribution: $DISTRIBUTION_ID"
+          
+          # Invalidate CloudFront cache
+          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
