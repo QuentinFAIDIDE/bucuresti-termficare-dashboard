@@ -2,6 +2,7 @@ import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import webpack from "webpack";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,6 +28,12 @@ export default {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+      __VERSION__: JSON.stringify(process.env.npm_package_version || '1.0.0'),
+      __IS_DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
+      __API_URL__: JSON.stringify(process.env.API_URL || 'https://2q8q4aa81c.execute-api.eu-south-2.amazonaws.com/prod/')
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",

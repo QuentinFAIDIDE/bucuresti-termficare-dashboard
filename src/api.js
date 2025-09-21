@@ -1,7 +1,4 @@
-const isDev = true; // Set to false for production
-
-const baseApiUri =
-  "https://2q8q4aa81c.execute-api.eu-south-2.amazonaws.com/prod/";
+const baseApiUri = __API_URL__;
 
 // API functions
 export const getCountData = async () => {
