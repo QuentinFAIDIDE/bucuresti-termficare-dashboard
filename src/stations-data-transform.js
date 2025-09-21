@@ -45,31 +45,36 @@ export const nMostRecentIncidentsFromTimelineData = (timeline, n = 10) => {
 
 export const computeStationStatisticsFromTimelineData = (timeline) => {
   const incidents = timeline.filter((entry) => entry.status !== "working");
-  const oneYear = 365 * 24 * 60 * 60 * 1000;
-  const now = Date.now();
+  if (incidents.length === 0) {
+    return {
+      avgIncidentHoursPerMonth: 0,
+      avgIncidentDuration: 0,
+      longestIncident: 0,
+    };
+  }
 
-  // Filter incidents in the last year
-  const lastYearIncidents = incidents.filter(
-    (incident) => incident.start >= now - oneYear
-  );
+  const oneHour = 60 * 60 * 1000;
+  const oneMonth = 31 * 24 * oneHour;
+
+  const firstDate = getFirstDateFromTimeline(timeline);
+  const lastDate = getLastDateFromTimeline(timeline);
 
   // Calculate total incident hours
-  const totalIncidentHours = lastYearIncidents.reduce((total, incident) => {
-    const duration = (incident.end - incident.start) / (1000 * 60 * 60);
+  const totalIncidentHours = incidents.reduce((total, incident) => {
+    const duration = (incident.end - incident.start) / oneHour;
     return total + duration;
   }, 0);
 
   // Average incident hours per month
-  const avgIncidentHoursPerMonth = Math.round(totalIncidentHours / 12);
+  const avgIncidentHoursPerMonth = Math.round(
+    totalIncidentHours / ((lastDate - firstDate) / oneMonth)
+  );
 
   // Average incident duration
-  const avgIncidentDuration =
-    lastYearIncidents.length > 0
-      ? Math.round(totalIncidentHours / lastYearIncidents.length)
-      : 0;
+  const avgIncidentDuration = Math.round(totalIncidentHours / incidents.length);
 
   // Longest incident duration
-  const longestIncident = lastYearIncidents.reduce((longest, incident) => {
+  const longestIncident = incidents.reduce((longest, incident) => {
     const duration = (incident.end - incident.start) / (1000 * 60 * 60);
     return duration > longest ? duration : longest;
   }, 0);
@@ -79,4 +84,18 @@ export const computeStationStatisticsFromTimelineData = (timeline) => {
     avgIncidentDuration,
     longestIncident: Math.round(longestIncident),
   };
+};
+
+const getFirstDateFromTimeline = (timeline) => {
+  if (timeline.length === 0) {
+    return null;
+  }
+  return Math.min(...timeline.map((entry) => entry.start));
+};
+
+const getLastDateFromTimeline = (timeline) => {
+  if (timeline.length === 0) {
+    return null;
+  }
+  return Math.max(...timeline.map((entry) => entry.end));
 };
