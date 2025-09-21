@@ -6,6 +6,7 @@ import {
   incidentsTimelineFromPoints,
   nMostRecentIncidentsFromTimelineData,
   computeStationStatisticsFromTimelineData,
+  formatHours,
 } from "./stations-data-transform.js";
 import { startLoading, stopLoading } from "./spinner.js";
 import { STATUS_COLORS } from "./colors.js";
@@ -76,12 +77,12 @@ const displayCityStatistics = (stats, container) => {
 
   const statItems = [
     {
-      value: `${stats.avgIncidentHoursPerMonth}h`,
+      value: formatHours(stats.avgIncidentHoursPerMonth),
       label: "stats.avgHours",
     },
-    { value: `${stats.avgIncidentDuration}h`, label: "stats.avgDuration" },
+    { value: formatHours(stats.avgIncidentDuration), label: "stats.avgDuration" },
     {
-      value: `${stats.longestIncident}h`,
+      value: formatHours(stats.longestIncident),
       label: "stats.longest",
     },
   ];

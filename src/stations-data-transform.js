@@ -99,3 +99,12 @@ const getLastDateFromTimeline = (timeline) => {
   }
   return Math.max(...timeline.map((entry) => entry.end));
 };
+
+export const formatHours = (hours) => {
+  if (hours < 24) {
+    return `${Math.round(hours)}h`;
+  }
+  const days = Math.floor(hours / 24);
+  const remainingHours = Math.round(hours % 24);
+  return remainingHours > 0 ? `${days}d ${remainingHours}h` : `${days}d`;
+};
