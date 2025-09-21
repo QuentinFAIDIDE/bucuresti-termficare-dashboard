@@ -10,8 +10,7 @@ const translations = {
     "map.description":
       "Click on a station to inspect its uptime and a list of recent incidents.",
     "warning.lastUpdated": "This dashboard was last updated on",
-    "warning.text":
-      "For real time updates, refer to the",
+    "warning.text": "For real time updates, refer to the",
     "warning.link": "official website",
     "stats.title": "Statistics",
     "stats.avgHours": "Avg Incident Hours/Month",
@@ -45,8 +44,7 @@ const translations = {
     "map.description":
       "Faceți clic pe o stație pentru a inspecta timpul de funcționare și lista incidentelor recente.",
     "warning.lastUpdated": "Actualizat ultima dată pe",
-    "warning.text":
-      "Pentru actualizări în timp real, consultați",
+    "warning.text": "Pentru actualizări în timp real, consultați",
     "warning.link": "site-ul oficial",
     "stats.title": "Statistici",
     "stats.avgHours": "Ore Incidente Medii/Lună",
@@ -58,7 +56,8 @@ const translations = {
     "incidents.stopDate": "Data Sfârșit",
     "incidents.status": "Status",
     "incidents.description": "Descriere",
-    "incidents.noIncidents": "Nu există incidente de afișat pentru această stație",
+    "incidents.noIncidents":
+      "Nu există incidente de afișat pentru această stație",
     "status.title": "Starea Actuală a Stațiilor",
     "status.working": "Funcționează",
     "status.issues": "Probleme",
@@ -71,7 +70,7 @@ const translations = {
   },
 };
 
-let currentLang = localStorage.getItem("language") || "en";
+let currentLang = localStorage.getItem("language") || "ro";
 
 export const t = (key) => {
   return translations[currentLang][key] || key;
