@@ -33,6 +33,7 @@ export default {
         process.env.API_URL ||
           "https://2q8q4aa81c.execute-api.eu-south-2.amazonaws.com/prod/"
       ),
+      __VERSION_TAG__: JSON.stringify(process.env.VERSION_TAG || "v0.0.0"),
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
