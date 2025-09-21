@@ -4,15 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { getStations, getStationDetails } from "./api.js";
 import { t } from "./i18n.js";
 import { startLoading, stopLoading } from "./spinner.js";
-
-
-// Consistent status colors across all components
-const STATUS_COLORS = {
-  working: "rgba(34, 197, 94, 1)",
-  issues: "rgba(251, 191, 36, 1)",
-  issue: "rgba(251, 191, 36, 1)",
-  broken: "rgba(239, 68, 68, 1)",
-};
+import { STATUS_COLORS } from "./colors.js";
 
 const STATION_CARDS_CLASS = "station-card";
 
@@ -173,7 +165,10 @@ const createTimelineChart = (timeline, container) => {
 
   // Calculate min time: max between 3 months ago and earliest data
   const threeMonthsAgo = Date.now() - 90 * 24 * 60 * 60 * 1000;
-  const earliestData = timeline.length > 0 ? Math.min(...timeline.map(t => t.start)) : threeMonthsAgo;
+  const earliestData =
+    timeline.length > 0
+      ? Math.min(...timeline.map((t) => t.start))
+      : threeMonthsAgo;
   const minTime = Math.max(threeMonthsAgo, earliestData);
 
   new Chart(canvas, {
@@ -211,8 +206,8 @@ const createTimelineChart = (timeline, container) => {
           min: minTime,
           max: Date.now(),
           time: {
-            unit: "day"
-          }
+            unit: "day",
+          },
         },
         y: { display: false },
       },
@@ -296,8 +291,7 @@ const createIncidentsTable = (incidentList, container) => {
 };
 
 const focusStation = async (geoid) => {
-
-  startLoading("stat-" + geoid)
+  startLoading("stat-" + geoid);
 
   const entries = await getStationDetails(geoid);
   const timeline = extractTimeline(entries);
@@ -337,11 +331,10 @@ const focusStation = async (geoid) => {
   // Scroll to sub-card
   document.getElementById("sub-card").scrollIntoView({ behavior: "smooth" });
 
-  stopLoading("stat-" + geoid)
+  stopLoading("stat-" + geoid);
 };
 
 export const initMap = async () => {
-
   startLoading("map");
 
   // Initialize Bucharest map
