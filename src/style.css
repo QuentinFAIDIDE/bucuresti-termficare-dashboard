@@ -149,41 +149,17 @@ tr:nth-child(even) {
     color: #8f98a0;
 }
 
-.incident-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: transparent;
-}
-
-.incident-table th {
-    border: 1px solid rgba(76, 84, 90, 0.5);
-    padding: 8px;
-    background-color: transparent;
-    color: #c7d5e0;
-}
-
-.incident-table td {
-    border: 1px solid rgba(76, 84, 90, 0.5);
-    padding: 8px;
-    color: #c7d5e0;
-    background-color: transparent;
-}
-
-.incident-table tr:nth-child(even) {
-    background-color: transparent;
-}
-
+#stations-table .status-broken,
 .incident-table .status-broken {
     color: rgba(239, 68, 68, 1);
 }
 
+#stations-table .status-issues,
 .incident-table .status-issues {
     color: rgba(251, 191, 36, 1);
 }
 
-.incident-table-header {
-    background-color: #2a475e33;
-}
+
 
 .warning-card {
     background-color: #302004;
@@ -455,14 +431,16 @@ tr:nth-child(even) {
     }
 }
 
-#stations-table {
+#stations-table,
+.incident-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1rem;
     background-color: transparent;
 }
 
-#stations-table th {
+#stations-table th,
+.incident-table th {
     border: 0px solid rgba(76, 84, 90, 0.5);
     border-bottom-width: 1px;
     padding: 8px;
@@ -471,14 +449,17 @@ tr:nth-child(even) {
     font-weight: bold;
 }
 
-#stations-table td {
-    border: 1px solid rgba(76, 84, 90, 0.062);
+#stations-table td,
+.incident-table td {
+    border: 0px solid rgba(76, 84, 90, 0.062);
+    border-bottom: 1px;
     padding: 8px;
     color: #c7d5e0;
     background-color: transparent;
 }
 
-#stations-table tr:nth-child(even) {
+#stations-table tr:nth-child(even),
+.incident-table tr:nth-child(even) {
     background-color: transparent;
 }
 
@@ -490,18 +471,20 @@ tr:nth-child(even) {
 }
 
 #stations-pagination button {
-    background-color: #374151;
+    background: none;
     color: #c7d5e0;
-    border: 1px solid rgba(76, 84, 90, 0.5);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    border: none;
+    padding: 0.25rem 0.5rem;
     cursor: pointer;
-    width: 100px;
+    width: auto;
     text-align: center;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
 }
 
 #stations-pagination button:hover:not(:disabled) {
-    background-color: #4b5563;
+    color: #60a5fa;
 }
 
 #stations-pagination button:disabled {
@@ -509,14 +492,24 @@ tr:nth-child(even) {
     cursor: not-allowed;
 }
 
+#prev-page::before {
+    content: "← ";
+    margin-right: 0.25rem;
+}
+
+#next-page::after {
+    content: " →";
+    margin-left: 0.25rem;
+}
+
 .map-focus-btn {
-    background-color: #374151;
+    background-color: #37415100;
     color: #c7d5e0;
-    border: 1px solid rgba(76, 84, 90, 0.5);
-    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(76, 84, 90, 0.685);
+    padding: 0.5rem 0.5rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 .map-focus-btn:hover {
