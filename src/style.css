@@ -478,6 +478,8 @@ tr:nth-child(even) {
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
+    width: 100px;
+    text-align: center;
 }
 
 #stations-pagination button:hover:not(:disabled) {
