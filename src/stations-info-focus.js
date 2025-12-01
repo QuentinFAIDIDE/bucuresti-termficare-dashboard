@@ -14,6 +14,11 @@ import { STATUS_COLORS } from "./colors.js";
 const STATION_CARDS_CLASS = "station-card";
 
 export const showStationInfos = async (geoid) => {
+  // Scroll to map
+  document
+    .getElementById("stations-map-card")
+    .scrollIntoView({ behavior: "smooth" });
+
   startLoading("stat-" + geoid);
 
   const entries = await getStationDetails(geoid);
@@ -64,9 +69,6 @@ export const showStationInfos = async (geoid) => {
     "incidents.title"
   );
   displayStationIncidentsTable(incidentList, incidentsCard);
-
-  // Scroll to sub-card
-  document.getElementById("sub-card").scrollIntoView({ behavior: "smooth" });
 
   stopLoading("stat-" + geoid);
 };
