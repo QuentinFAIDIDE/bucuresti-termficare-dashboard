@@ -26,9 +26,6 @@ header {
     margin: 0;
     width: 100%;
     padding: 1.5rem 0rem;
-    position: sticky;
-    top: 0;
-    z-index: 1001;
 }
 
 header .header-content {
