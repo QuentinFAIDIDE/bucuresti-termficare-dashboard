@@ -65,8 +65,8 @@ header .header-content {
 }
 
 .top-logo {
-    width: 100%;
-    max-width: 100%;
+    width: 90%;
+    max-width: 90%;
     padding-top: 2px;
     padding-bottom: 15px;
 }
@@ -410,7 +410,7 @@ tr:nth-child(even) {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 450px) {
     .top-logo {
         display: none;
     }
