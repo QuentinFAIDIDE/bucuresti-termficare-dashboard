@@ -2,7 +2,7 @@ import { getStationsStats } from "./api.js";
 import { startLoading, stopLoading } from "./spinner.js";
 
 let currentPage = 1;
-const itemsPerPage = 20;
+const itemsPerPage = 10;
 let stationsData = [];
 
 export const updateStationsList = async () => {
@@ -26,8 +26,6 @@ const renderTable = () => {
       <td>${station.rank}</td>
       <td>${station.name}</td>
       <td>${station.avgMonthlyIncidentTimeHours.toFixed(1)}h</td>
-      <td>${station.avgIncidentTimeHours.toFixed(1)}h</td>
-      <td>${station.maxIncidentTimeHours.toFixed(1)}h</td>
       <td><button class="map-focus-btn" data-station-id="${station.id}">📍</button></td>
     </tr>
   `).join("");
