@@ -46,7 +46,7 @@ export const showStationInfos = async (geoid) => {
     "stats.title"
   );
   const stats = computeStationStatisticsFromTimelineData(timeline);
-  displayCityStatistics(stats, statsCard);
+  displayStationStats(stats, statsCard);
 
   const timelineCard = createOrGetMapStationDetailSection(
     "timeline-card",
@@ -66,7 +66,7 @@ export const showStationInfos = async (geoid) => {
   stopLoading("stat-" + geoid);
 };
 
-const displayCityStatistics = (stats, container) => {
+const displayStationStats = (stats, container) => {
   const statsSection = document.createElement("div");
   statsSection.className = "stats-section";
 
@@ -80,7 +80,10 @@ const displayCityStatistics = (stats, container) => {
       value: formatHours(stats.avgIncidentHoursPerMonth),
       label: "stats.avgHours",
     },
-    { value: formatHours(stats.avgIncidentDuration), label: "stats.avgDuration" },
+    {
+      value: formatHours(stats.avgIncidentDuration),
+      label: "stats.avgDuration",
+    },
     {
       value: formatHours(stats.longestIncident),
       label: "stats.longest",

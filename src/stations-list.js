@@ -1,6 +1,7 @@
 import { getStationsStats } from "./api.js";
 import { startLoading, stopLoading } from "./spinner.js";
 import { showStationInfos } from "./stations-info-focus.js";
+import { formatHours } from "./stations-data-transform.js";
 
 let currentPage = 1;
 const itemsPerPage = 10;
@@ -26,7 +27,7 @@ const renderTable = () => {
     <tr>
       <td>${station.rank}</td>
       <td>${station.name}</td>
-      <td>${station.avgMonthlyIncidentTimeHours.toFixed(1)}h</td>
+      <td>${formatHours(station.avgMonthlyIncidentTimeHours)}</td>
       <td><button class="map-focus-btn" data-station-id="${station.id}">📍</button></td>
     </tr>
   `).join("");
