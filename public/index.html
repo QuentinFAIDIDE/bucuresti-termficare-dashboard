@@ -77,6 +77,33 @@
                 </div>
             </div>
 
+            <div class="card">
+                <h1 data-i18n="ranking.title">Station Rankings</h1>
+                <p data-i18n="ranking.description">Best and worst performing heating stations by incident frequency and duration.</p>
+                <hr />
+                <div id="stations-stats"></div>
+                <div id="stations-table-container">
+                    <table id="stations-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="ranking.table.rank">Rank</th>
+                                <th data-i18n="ranking.table.name">Name</th>
+                                <th data-i18n="ranking.table.monthlyHours">Monthly Hours</th>
+                                <th data-i18n="ranking.table.avgDuration">Avg Duration</th>
+                                <th data-i18n="ranking.table.maxDuration">Max Duration</th>
+                                <th data-i18n="ranking.table.actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stations-table-body">
+                        </tbody>
+                    </table>
+                    <div id="stations-pagination">
+                        <button id="prev-page" disabled data-i18n="ranking.pagination.previous">Previous</button>
+                        <span id="page-info">Page 1 of 1</span>
+                        <button id="next-page" disabled data-i18n="ranking.pagination.next">Next</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </main>

@@ -452,3 +452,53 @@ tr:nth-child(even) {
         transform: rotate(360deg);
     }
 }
+
+#stations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+#stations-table th {
+    background-color: #2a475e33;
+    font-weight: bold;
+}
+
+#stations-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+#stations-pagination button {
+    background-color: #374151;
+    color: #c7d5e0;
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#stations-pagination button:hover:not(:disabled) {
+    background-color: #4b5563;
+}
+
+#stations-pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.map-focus-btn {
+    background-color: #374151;
+    color: #c7d5e0;
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.map-focus-btn:hover {
+    background-color: #4b5563;
+}
