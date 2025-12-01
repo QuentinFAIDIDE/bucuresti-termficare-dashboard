@@ -116,6 +116,8 @@ const displayStationStats = (stats, container) => {
   });
 
   container.appendChild(statsSection);
+
+  document.getElementById("sub-card").scrollIntoView({ behavior: "smooth" });
 };
 
 const displayStationTimelineChart = (timeline, container) => {
