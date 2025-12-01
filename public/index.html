@@ -49,6 +49,18 @@
             </div>
 
             <div class="card">
+                <h1 data-i18n="chart.title">Broken Heating Stations Over Time</h1>
+                <p data-i18n="chart.description">Count of stations over time that are either working, experiencing
+                    issues, or are broken.</p>
+
+                <hr />
+
+                <div id="historical-chart-container" style="height: 400px;">
+                    <canvas id="historical-chart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
                 <h1 data-i18n="ranking.title">Station Rankings</h1>
                 <p data-i18n="ranking.description">Best and worst performing heating stations by incident frequency and duration.</p>
                 <hr />
@@ -71,18 +83,6 @@
                         <span id="page-info">Page 1 of 1</span>
                         <button id="next-page" disabled data-i18n="ranking.pagination.next">Next</button>
                     </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h1 data-i18n="chart.title">Broken Heating Stations Over Time</h1>
-                <p data-i18n="chart.description">Count of stations over time that are either working, experiencing
-                    issues, or are broken.</p>
-
-                <hr />
-
-                <div id="historical-chart-container" style="height: 400px;">
-                    <canvas id="historical-chart"></canvas>
                 </div>
             </div>
 
