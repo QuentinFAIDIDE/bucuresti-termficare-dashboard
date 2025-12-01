@@ -42,6 +42,7 @@ const translations = {
     "ranking.table.open": "Open",
     "ranking.pagination.previous": "Previous",
     "ranking.pagination.next": "Next",
+    "ranking.see.button": "View Statistics",
   },
   ro: {
     "about.title": "Despre Acest Site",
@@ -87,6 +88,7 @@ const translations = {
     "ranking.table.open": "Deschide",
     "ranking.pagination.previous": "Anterior",
     "ranking.pagination.next": "Următorul",
+    "ranking.see.button": "Vezi Statistici",
   },
 };
 

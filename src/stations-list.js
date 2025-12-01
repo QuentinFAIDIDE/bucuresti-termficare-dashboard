@@ -3,6 +3,7 @@ import { startLoading, stopLoading } from "./spinner.js";
 import { showStationInfos } from "./stations-info-focus.js";
 import { formatHours } from "./stations-data-transform.js";
 import { clickStationOnMap } from "./stations-map.js";
+import { t } from "./i18n.js";
 
 let currentPage = 1;
 const itemsPerPage = 10;
@@ -31,9 +32,9 @@ const renderTable = () => {
       <td>${station.rank}</td>
       <td>${station.name}</td>
       <td>${formatHours(station.avgMonthlyIncidentTimeHours)}</td>
-      <td><button class="map-focus-btn" data-station-id="${
+      <td style="text-align: center;"><button data-i18n="ranking.see.button" class="map-focus-btn" data-station-id="${
         station.id
-      }">📍</button></td>
+      }">${t("ranking.see.button")}</button></td>
     </tr>
   `
     )
