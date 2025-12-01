@@ -1,6 +1,6 @@
 import { Chart, registerables } from "chart.js";
 
-import { getStations, getStationDetails } from "./api.js";
+import { getStations, getStationDetails, getStationsStats } from "./api.js";
 import { t } from "./i18n.js";
 import {
   incidentsTimelineFromPoints,
@@ -21,9 +21,9 @@ export const showStationInfos = async (geoid) => {
   const incidentList = nMostRecentIncidentsFromTimelineData(timeline);
 
   // Get station name from stations data
-  const stations = await getStations();
-  const station = stations.find((s) => s.id === geoid);
-  const stationName = station ? station.name : `Station ${geoid}`;
+  const allStationsStats = await getStationsStats();
+  const stationStats = allStationsStats.byId[geoid];
+  const stationName = stationStats ? stationStats.name : `Station ${geoid}`;
 
   // Clear placeholder and display station name at top of sub-card
   const subCard = document.getElementById("sub-card");
@@ -45,7 +45,12 @@ export const showStationInfos = async (geoid) => {
     "statistics-card",
     "stats.title"
   );
-  const stats = computeStationStatisticsFromTimelineData(timeline);
+  const stats = {
+    avgIncidentHoursPerMonth: stationStats.avgMonthlyIncidentTimeHours,
+    avgIncidentDuration: stationStats.avgIncidentTimeHours,
+    rank: stationStats.rank,
+    size: allStationsStats.byRank.length,
+  };
   displayStationStats(stats, statsCard);
 
   const timelineCard = createOrGetMapStationDetailSection(
@@ -85,8 +90,8 @@ const displayStationStats = (stats, container) => {
       label: "stats.avgDuration",
     },
     {
-      value: formatHours(stats.longestIncident),
-      label: "stats.longest",
+      value: "" + stats.rank + " / " + stats.size,
+      label: "stats.topworst",
     },
   ];
 
