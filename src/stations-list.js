@@ -1,5 +1,6 @@
 import { getStationsStats } from "./api.js";
 import { startLoading, stopLoading } from "./spinner.js";
+import { showStationInfos } from "./stations-info-focus.js";
 
 let currentPage = 1;
 const itemsPerPage = 10;
@@ -29,6 +30,11 @@ const renderTable = () => {
       <td><button class="map-focus-btn" data-station-id="${station.id}">📍</button></td>
     </tr>
   `).join("");
+  
+  // Add click handlers for Open buttons
+  tbody.querySelectorAll('.map-focus-btn').forEach(btn => {
+    btn.onclick = () => showStationInfos(btn.dataset.stationId);
+  });
   
   updatePaginationInfo();
 };
