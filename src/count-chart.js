@@ -80,7 +80,7 @@ const createHistoricalChart = (data) => {
         },
         y: {
           stacked: true,
-          beginAtZero: false,
+          beginAtZero: true,
         },
       },
     },
