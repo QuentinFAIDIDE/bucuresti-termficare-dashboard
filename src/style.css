@@ -457,11 +457,26 @@ tr:nth-child(even) {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1rem;
+    background-color: transparent;
 }
 
 #stations-table th {
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    padding: 8px;
     background-color: #2a475e33;
+    color: #c7d5e0;
     font-weight: bold;
+}
+
+#stations-table td {
+    border: 1px solid rgba(76, 84, 90, 0.5);
+    padding: 8px;
+    color: #c7d5e0;
+    background-color: transparent;
+}
+
+#stations-table tr:nth-child(even) {
+    background-color: transparent;
 }
 
 #stations-pagination {
