@@ -22,7 +22,7 @@ jobs:
         env:
           API_URL: ${{ secrets.PROD_API_URL }}
           VERSION_TAG: ${{ github.event.release.tag_name }}
-        run: npm run build
+        run: npm run export
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -38,7 +38,7 @@ jobs:
           echo "Deploying to bucket: $BUCKET_NAME"
 
           # Sync files to S3
-          aws s3 sync dist/ s3://$BUCKET_NAME --delete
+          aws s3 sync out/ s3://$BUCKET_NAME --delete
 
           # Get CloudFront distribution ID
           DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?contains(Comment, 'termoficarekt') || contains(Origins.Items[0].DomainName, '$BUCKET_NAME')].Id" --output text)
